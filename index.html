@@ -10,7 +10,9 @@
   <script>
     const spec = {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "title": "Global Air Pollution Analysis",
+  "data": {
+    "url": "https://raw.githubusercontent.com/jyin0028/Fit3179/main/global%20air%20pollution%20dataset.csv"
+  },
   "vconcat": [
     {
       "title": "Global air pollution",
@@ -69,47 +71,55 @@
       ]
     },
     {
-      "title": "Air Quality Index (AQI) by City",
-      "data": {
-        "url": "https://raw.githubusercontent.com/jyin0028/Fit3179/main/global%20air%20pollution%20dataset.csv"
+      "mark": "point",
+      "encoding": {
+        "x": {"field": "Ozone AQI Value", "type": "quantitative"},
+        "y": {"field": "AQI Value", "type": "quantitative"},
+        "tooltip": [
+          {"field": "Country", "type": "nominal"},
+          {"field": "Ozone AQI Value", "type": "quantitative"},
+          {"field": "AQI Value", "type": "quantitative"}
+        ]
+      }
+    },
+    {
+      "mark": "arc",
+      "transform": [{"filter": {"selection": "Region Selection"}}],
+      "encoding": {
+        "theta": {"field": "AQI Category", "type": "ordinal", "stack": true},
+        "color": {"field": "Country", "type": "nominal"},
+        "tooltip": [
+          {"field": "Country", "type": "nominal"},
+          {"field": "AQI Category", "type": "nominal"}
+        ]
       },
-      "description": "Visualizing AQI Values for various cities. Filter by AQI Category.",
       "selection": {
-        "AQICategory": {
+        "Region Selection": {
           "type": "single",
           "fields": ["AQI Category"],
           "bind": {
             "input": "select",
             "options": [
-              null,
               "Good",
               "Moderate",
-              "Unhealthy for Sensitive Groups",
               "Unhealthy",
-              "Very Unhealthy",
-              "Hazardous"
+              "Unhealthy for Sensitive Groups"
             ]
           }
         }
-      },
-      "transform": [{"filter": {"selection": "AQICategory"}}],
-      "mark": "bar",
+      }
+    },
+    {
+      "mark": "line",
       "encoding": {
-        "x": {"field": "City", "type": "ordinal", "axis": {"labelAngle": -45}},
-        "y": {
-          "field": "AQI Value",
-          "type": "quantitative",
-          "title": "AQI Value"
-        },
-        "color": {"field": "AQI Category", "type": "nominal"},
+        "x": {"field": "AQI Value", "type": "quantitative"},
+        "y": {"field": "PM2.5 AQI Value", "type": "quantitative"},
+        "color": {"field": "Country", "type": "nominal"},
         "tooltip": [
           {"field": "Country", "type": "nominal"},
-          {"field": "City", "type": "nominal"},
-          {"field": "AQI Value", "type": "quantitative"},
-          {"field": "AQI Category", "type": "nominal"}
+          {"field": "PM2.5 AQI Value", "type": "quantitative"}
         ]
-      },
-      "config": {"view": {"stroke": "transparent"}, "axis": {"domainWidth": 1}}
+      }
     }
   ],
   "config": {}
