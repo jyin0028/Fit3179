@@ -1,0 +1,31 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "data": {
+      "url": "https://raw.githubusercontent.com/jyin0028/Fit3179/main/global%20air%20pollution%20dataset.csv"
+    },
+    "transform": [
+      {
+        "window": [{
+          "op": "rank",
+          "as": "rank",
+          "field": "AQI Value",
+          "order": "descending"
+        }],
+        "frame": [null, null]
+      },
+      {
+        "filter": {"field": "rank","lt": 16}
+      }
+    ],
+      "layer": [
+      {
+        "mark": "point",
+        "encoding": {
+          "x": {"field": "Ozone AQI Value", "type": "quantitative"},
+          "y": {"field": "AQI Value", "type": "quantitative"},
+          "tooltip": [{"field": "Country", "type": "nominal"},{"field": "Ozone AQI Value", "type": "quantitative"}, {"field": "AQI Value", "type": "quantitative"}]
+        }
+      }
+  
+      ],"config": {}
+  }

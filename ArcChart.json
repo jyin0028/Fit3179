@@ -1,0 +1,43 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "data": {
+      "url": "https://raw.githubusercontent.com/jyin0028/Fit3179/main/global%20air%20pollution%20dataset.csv"
+    },
+    "transform": [
+      {
+        "window": [{
+          "op": "rank",
+          "as": "rank",
+          "field": "AQI Value",
+          "order": "descending"
+        }],
+        "frame": [null, null]
+      },
+      {
+        "filter": {"field": "rank","lt": 16}
+      }
+    ],
+      "layer": [
+      {
+        "mark": "arc",
+        "transform": [
+          {
+            "filter": {"selection": "Region Selection"}
+          }
+        ],
+        "encoding": {
+          "theta": {"field": "AQI Category", "type": "ordinal", "stack": true},
+          "color": {"field": "Country", "type": "nominal"},
+          "tooltip": [{"field": "Country", "type": "nominal"}, {"field": "AQI Category", "type": "nominal"}]
+        },
+        "selection": {
+          "Region Selection": { 
+            "type": "single", 
+            "fields": ["AQI Category"],
+            "bind": {"input": "select", "options": ["Good", "Moderate", "Unhealthy","Unhealthy for Sensitive Groups"]}
+          }
+        }
+      }
+  
+      ],"config": {}
+  }

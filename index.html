@@ -1,136 +1,42 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <script src="https://cdn.jsdelivr.net/npm/vega@5.25.0"></script>
-  <script src="https://cdn.jsdelivr.net/npm/vega-lite@5.15.0"></script>
-  <script src="https://cdn.jsdelivr.net/npm/vega-embed@6.22.2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+    <!-- CSS file -->
+    <link rel="stylesheet" type="text/css" href="css/styles.css" media="all">
+
 </head>
 <body>
-  <div id="vis"/>
-  <script>
-    const spec = {
-  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "data": {
-    "url": "https://raw.githubusercontent.com/jyin0028/Fit3179/main/global%20air%20pollution%20dataset.csv"
-  },
-  "vconcat": [
-    {
-      "title": "Global air pollution",
-      "width": 800,
-      "height": 500,
-      "data": {
-        "url": "https://raw.githubusercontent.com/jyin0028/Fit3179/main/ne_110m_admin_0_countries.json",
-        "format": {"type": "topojson", "feature": "ne_110m_admin_0_countries"}
-      },
-      "projection": {"type": "equalEarth"},
-      "layer": [
-        {
-          "transform": [
-            {
-              "calculate": "'Data is not available in ' + datum.properties.NAME",
-              "as": "note"
-            }
-          ],
-          "mark": {"type": "geoshape", "fill": "lightgray", "stroke": "white"},
-          "encoding": {"tooltip": {"field": "note"}}
-        },
-        {
-          "transform": [
-            {
-              "lookup": "properties.NAME",
-              "from": {
-                "data": {
-                  "url": "https://raw.githubusercontent.com/jyin0028/Fit3179/main/global%20air%20pollution%20dataset.csv"
-                },
-                "key": "Country",
-                "fields": ["AQI Value"]
-              }
-            }
-          ],
-          "mark": {"type": "geoshape", "stroke": "white"},
-          "encoding": {
-            "color": {
-              "field": "AQI Value",
-              "type": "quantitative",
-              "scale": {
-                "type": "threshold",
-                "domain": [10, 50, 200],
-                "range": ["#fdbe85", "#fd8d3c", "#e6550d", "#a63603"]
-              }
-            },
-            "tooltip": [
-              {
-                "field": "properties.NAME",
-                "type": "nominal",
-                "title": "Country"
-              },
-              {"field": "AQI Value", "type": "quantitative"}
-            ]
-          }
-        }
-      ]
-    },
-    {
-      "width": 500,
-      "height": 400,
-      "title": "The proportion of AQI value and Ozone value",
-      "mark": "point",
-      "encoding": {
-        "x": {"field": "Ozone AQI Value", "type": "quantitative"},
-        "y": {"field": "AQI Value", "type": "quantitative"},
-        "tooltip": [
-          {"field": "Country", "type": "nominal"},
-          {"field": "Ozone AQI Value", "type": "quantitative"},
-          {"field": "AQI Value", "type": "quantitative"}
-        ]
-      }
-    },
-    {
-      "mark": "arc",
-      "transform": [{"filter": {"selection": "Region Selection"}}],
-      "encoding": {
-        "theta": {"field": "AQI Category", "type": "ordinal", "stack": true},
-        "color": {"field": "Country", "type": "nominal"},
-        "tooltip": [
-          {"field": "Country", "type": "nominal"},
-          {"field": "AQI Category", "type": "nominal"}
-        ]
-      },
-      "selection": {
-        "Region Selection": {
-          "type": "single",
-          "fields": ["AQI Category"],
-          "bind": {
-            "input": "select",
-            "options": [
-              "Good",
-              "Moderate",
-              "Unhealthy",
-              "Unhealthy for Sensitive Groups"
-            ]
-          }
-        }
-      }
-    },
-    {
-      "width": 500,
-      "height": 400,
-      "title": "The proportion of AQI value and PM2.5 value",
-      "mark": "line",
-      "encoding": {
-        "x": {"field": "AQI Value", "type": "quantitative"},
-        "y": {"field": "PM2.5 AQI Value", "type": "quantitative"},
-        "color": {"field": "Country", "type": "nominal"},
-        "tooltip": [
-          {"field": "Country", "type": "nominal"},
-          {"field": "PM2.5 AQI Value", "type": "quantitative"}
-        ]
-      }
-    }
-  ],
-  "config": {}
-};
-    vegaEmbed("#vis", spec, {mode: "vega-lite"}).then(console.log).catch(console.warn);
-  </script>
+
+<h1>Global Air Pollution Graph</h1>
+<h2>In this page you can find the details.</h2>
+
+<div id="vis1"></div>
+<p>PointChart</p>
+
+<div id="vis2"></div>
+<p>ArcChart</p>
+
+<div id="vis3"></div>
+<p>LineChart</p>
+
+<div id="map"></div>
+<p>The Ocean is at XXX</p>
+
+<script type="text/javascript">
+async function fetchData(id, filename) {
+  const response = await fetch(filename);
+  const spec = await response.json();
+  vegaEmbed(`#${id}`, spec);
+}
+
+fetchData('vis1', 'PointChart.json');
+fetchData('vis2', 'ArcChart.json');
+fetchData('vis3', 'LineChart.json');
+fetchData('map', 'map.json');
+</script>
+
 </body>
 </html>
