@@ -1,66 +1,101 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Global Air Pollution Graph</title>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/vega/5.20.2/vega.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/vega-lite@5.1.0/build/vega-lite.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/vega-embed@6.12.2/build/vega-embed.min.js"></script>
+  <!-- Import Vega & Vega-Lite (does not have to be from CDN) -->
+  <script src="https://cdn.jsdelivr.net/npm/vega@5.22.1"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-lite@5.5.0"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-embed@6.21.0"></script>
+  
+  <!-- CSS file -->
+  <link rel="stylesheet" type="text/css" href="styles.css" media="all">
+
+
 </head>
-<body class="bg-light">
-  <div class="container mt-5 mb-5">
-    <h1 class="mb-3">Global Air Pollution Graph</h1>
-    <p>Air pollution has become an issue of global concern, affecting both our environment and the health of the world's population. 
-    The alteration of the atmosphere by harmful chemicals has been linked to various respiratory and cardiovascular conditions. This dataset aims to provide insights into air quality metrics across various cities and countries.
-    </p>
-    
-    <div id="mapPlot"><h4>Figure 1.1 Map</h4></div>
-    <script type="text/javascript">
-      vegaEmbed('#mapPlot', 'map.json');
-    </script>
-    
-    <h2 class="mt-5">The AQI categories for every country</h2>
+<body id="Body">
+  <div id="MainBox">
+  
+<div id="Title">Global_Air_Pollution_Data_Analysis</div>
 
-    <div class="row">
-      <div class="col-sm-6">
-        <div id="arcPlot"><h4>Figure 1.2 ArcChart</h4></div>
-        <script type="text/javascript">
-          vegaEmbed('#arcPlot', 'ArcChart.json');
-        </script>
-      </div>
-      <div class="col-sm-6">
-        <p> Countries span three distinct AQI categories, from the cleanest (Good) to more polluted (Unhealthy).
-          Most European countries, including France, Netherlands, and Poland, are classified under the 'Good' AQI category. 
-          India and Pakistan's classification under 'Unhealthy' is alarming, 
-          underscoring the significant air quality challenges in the South Asian region, often attributed to factors like industrialization, vehicular emissions, and crop burning. </p>
-      </div>
-    </div>
+<div id="MapContext">
+  Video game companies are situated all over the world, but where
+  are they most located? The map below displays the spread of these
+  companies throughout the world. As can be expected, most of these 
+  are located within the United States, however there are quite a few
+  located in some contries you wouldn't expect games to be produced in
+  such as France for example.
+</div>
+<div id="choropleth_map"></div>
+<div id="GameSalesTitle">A Further Look Into Video Game Sales</div>
+<div id="BarChartAnalysis">
+  The bar chart on the left depicts ten of the best selling and
+  most influential games and their sales figures in each of the
+  major sections of the world. A lot of these sales are seen to be within
+  the North American region, and the game "Wii Sports" can be seen as the
+  highest selling game of all time, with sales numbers greater than 80 million
+  copies sold. "Wii Sports" is wildly known as the most successful game and ended
+  up skyrocketing the "Wii" console's sales also making it one of the most
+  high selling video game consoles. This was because of "Wii Sport" having some
+  incredibly innovative gameplay, utilising infrared sensors and motion
+  controls. Nine out of ten of the games featured within this graph were produced
+  by Nintendo, and can thank their family friendly themes and multiplayer
+  gameplay for their high sales numbers.
+</div>
+<div id="bar_chart"></div>
+<div id="PieChartAnalysis">
+  The pie chart on the right depicts something rather interesting, it shows
+  the sales numbers of different video game genres in different sections
+  of the world, similar to the bar chart, it has the same regions defined.
+  A very interesting fact displayed by this graph is the difference in the 
+  most popular genre in the North American region versus Japan. By selecting
+  these sections in the drop down menu, it can be viewed that within 
+  North America, Action and Sports games are the most popular and highest selling,
+  where as within Japan, Role Playing Games (RPGs) are the most popular. This 
+  could be explained by the differing cultures within Japan and North America,
+  with North America being more interested in games such as "Call Of Duty" and
+  "Fifa" rather than RPG games such as "Final Fantasy" and "Xenoblade Chronicles", 
+  which have been wildly successful within Japan. People in North America would 
+  also be purchasing video games for a younger audience, which would not have 
+  the attention span required for large fifty plus hour completion time RPG games.
+</div>
+<div id="pie_chart"></div>
+<div id="MostSuccess">
+  The Most Successful Video Game Company
+</div>
+<div id="NintendoAnalysis">
+  Referring back to the bar chart above, nine out of ten of the top selling games 
+  around the world are created by Nintendo. Nintendo, founded in 1989 by 
+  Fusajiro Yamauchi, is widely known as the most successful video game company 
+  bringing in billions of dollars in revenue and creating some of the most 
+  iconic and well known games and mascots in the world today. Looking at the 
+  line graph below, we can see the sheer amount of sales thic company has had 
+  over the years. The highest sales the company had were in the year 2006, this 
+  is also the year "Wii Sports" was released, bringing them huge amounts of profit.
+</div>
+<div id="line_chart"></div>
+</div>
 
-    <div class="row mt-5">
-      <div class="col-sm-6">
-        <p> ...(Your associated text for Figure 1.3) ... </p>
-      </div>
-      <div class="col-sm-6">
-        <div id="pointPlot"><h4>Figure 1.3 PointChart</h4></div>
-        <script type="text/javascript">
-          vegaEmbed('#pointPlot', 'PointChart.json');
-        </script>
-      </div>
-    </div>
+<script type="text/javascript">
 
-    <h2 class="mt-5">The proportion of AQI and Ozone for every countries</h2>
+  var spec2 = "js/map.json";
+  vegaEmbed('#map', spec2).then(function(result) {
+    // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
+  }).catch(console.error);
 
-    <div class="row mt-1">
-      <div class="col-sm-6">
-        <div id="barPlot"><h4>Figure 1.4 BarChart</h4></div>
-        <script type="text/javascript">
-          vegaEmbed('#barPlot', 'BarChart.json');
-        </script>
-      </div>
-      <div class="col-sm-6">
-        <p> ...(Your associated text for Figure 1.4) ... </p>
-      </div>
-    </div>
-  </div>
+  var spec2 = "js/bar_chart.json";
+  vegaEmbed('#bar_chart', spec2).then(function(result) {
+    // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
+  }).catch(console.error);
+  
+  var spec2 = "js/pie_chart.json";
+  vegaEmbed('#pie_chart', spec2).then(function(result) {
+    // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
+  }).catch(console.error);
+
+  var spec2 = "js/scatter_chart.json";
+  vegaEmbed('#scatter_chart', spec2).then(function(result) {
+    // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
+  }).catch(console.error);
+</script>
+
 </body>
 </html>
