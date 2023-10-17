@@ -1,31 +1,65 @@
 {
-    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-    "data": {
-      "url": "https://raw.githubusercontent.com/jyin0028/Fit3179/main/global%20air%20pollution%20dataset.csv"
-    },
-    "transform": [
-      {
-        "window": [{
-          "op": "rank",
-          "as": "rank",
-          "field": "AQI Value",
-          "order": "descending"
-        }],
-        "frame": [null, null]
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "data": {
+    "url": "https://raw.githubusercontent.com/jyin0028/Fit3179/main/global%20air%20pollution%20dataset.csv"
+  },
+  "title": "Ozone Air Quality Index (AQI) Values by City",
+  "transform": [
+    {
+      "filter": {"selection": "country_dropdown"}
+    }
+  ],
+  "selection": {
+    "country_dropdown": {
+      "type": "single",
+      "fields": ["Country"],
+      "bind": {
+        "input": "select",
+        "options": [
+          "Australia",
+          "China",
+          "India",
+          "France",
+          "null"
+        ],
+        "name": "Select Country: "
       },
-      {
-        "filter": {"field": "rank","lt": 16}
-      }
+      "empty": "all"
+    }
+  },
+  "mark": "bar",
+  "encoding": {
+    "x": {
+      "field": "City",
+      "type": "ordinal",
+      "title": "City"
+    },
+    "y": {
+      "field": "Ozone AQI Value",
+      "type": "quantitative",
+      "title": "Ozone AQI Value"
+    },
+    "tooltip": [
+      {"field": "City", "type": "ordinal"},
+      {"field": "Ozone AQI Value", "type": "quantitative"},
+      {"field": "Ozone AQI Category", "type": "ordinal"}
     ],
-      "layer": [
-      {
-        "mark": "point",
-        "encoding": {
-          "x": {"field": "Ozone AQI Value", "type": "quantitative"},
-          "y": {"field": "AQI Value", "type": "quantitative"},
-          "tooltip": [{"field": "Country", "type": "nominal"},{"field": "Ozone AQI Value", "type": "quantitative"}, {"field": "AQI Value", "type": "quantitative"}]
-        }
+    "color": {
+      "field": "Ozone AQI Category",
+      "type": "nominal",
+      "title": "Ozone AQI Category",
+      "legend": {
+        "title": "Ozone AQI Category"
       }
-  
-      ],"config": {}
+    }
+  },
+  "config": {
+    "axis": {
+      "labelFontSize": 12,
+      "titleFontSize": 16
+    },
+    "title": {
+      "fontSize": 24
+    }
   }
+}
