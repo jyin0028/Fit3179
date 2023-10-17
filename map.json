@@ -48,6 +48,21 @@
           {"field": "AQI Value", "type": "quantitative"}
         ]
       }
+    },
+    {
+      "data": {
+        "values": [
+          {"lon": -20.0, "lat": 0.0, "text": "Atlantic Ocean"},
+          {"lon": -120.0, "lat": 0.0, "text": "Pacific Ocean"},
+          {"lon": 70.0, "lat": 0.0, "text": "Indian Ocean"}
+        ]
+      },
+      "mark": {"type": "text", "fontSize": 12, "baseline": "middle"},
+      "encoding": {
+          "longitude": {"field": "lon", "type": "quantitative"},
+          "latitude": {"field": "lat", "type": "quantitative"},
+          "text": {"field": "text", "type": "nominal"}
+      }  
     }
   ],
   "config": {}
