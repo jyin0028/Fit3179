@@ -25,7 +25,7 @@
           "lookup": "properties.NAME",
           "from": {
             "data": {
-              "url": "https://raw.githubusercontent.com/jyin0028/Fit3179/main/global%20air%20pollution%20dataset.csv"
+              "url": "https://raw.githubusercontent.com/jyin0028/Fit3179/main/global_air_pollution_dataset.csv"
             },
             "key": "Country",
             "fields": ["AQI Value"]
